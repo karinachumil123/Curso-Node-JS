@@ -1,14 +1,17 @@
 const express = require('express')
-const hbs= require('hbs')
-require('dotenv').config();
+const hbs = require('hbs')
+require('dotenv').config()
 
-const app= express()
-const port= process.env.PORT 
+const app = express()
+const port = process.env.PORT
 
-app.set('view engine','hbs')
+ // Utilización de Handlebars hbs para el renderizado de la página web
+ app.set('view engine', 'hbs')
 
-hbs.registerPartial(__dirname+'/views/portials')
+ // Uso de parciales "código que se repite en más de un lugar o páginas web"
+hbs.registerPartials(__dirname + '/views/portials')
 
+ // Servir contenido estático public3 donde está el templated
 app.use(express.static('public3'))
 
 //enviando argumentos a home 3
@@ -36,25 +39,25 @@ app.get('/generic', (req, res) => {
  * esta pagina tiene aplicada portails
  */
 
-app.get('/elements', (req, res) => {
-    res.render('elements',{
+app.get('/element', (req, res) => {
+    res.render('element',{
         nombre: "Karina Chumil",
         titulo: "Curso de NodeJS"
     })
 })
 
-app.get('/generic',(req,res)=>{
-    res.sendFile(__dirname+'/public3/generic.html')
+// app.get('/generic', (req, res) => {
+//     res.sendFile(__dirname + '/public3/generic.html')
+// })
+
+// app.get('/elements', (req, res) => {
+//     res.sendFile(__dirname + '/public3/elements.html')
+// })
+
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/404.html')
 })
 
-app.get('/elements',(req,res)=>{
-    res.sendFile(__dirname+'/public3/elements.html')
-})
-
-app.get('*',(res,req)=>{
-    res.sendFile(__dirname+'/public/404.html')
-})
-
-app.listen(port,()=>{
-    console.log(`servidor escuchando en el puerto ${port}`)
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
 })
